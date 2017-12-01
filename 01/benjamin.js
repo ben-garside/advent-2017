@@ -11,7 +11,25 @@ for (let index = 0; index < input.length; index++) {
         next_num = input[index + 1]
     }
     if (element == next_num) {
-        number = number + element;
+        number += element;
+    }
+}
+
+console.log(number);
+
+// PUZZLE TWO //
+
+var length = input.length
+var distance = length / 2
+
+for (let index = 0; index < length; index++) {
+    var nxt_idx = index + distance;
+    if(nxt_idx > length - 1){
+        nxt_idx = nxt_idx - length;
+    }
+    nxt_num = Number(input[nxt_idx]);
+    if(Number(input[index]) == nxt_num) {
+        number += nxt_num;
     }
 }
 
