@@ -6,3 +6,5 @@ Add your solution to the directory of the day your are solving. When adding your
       benjamin.js
       babu-1.js
       babu-2.js
+
+Current scores on the [Leaderboard](https://adventofcode.com/2017/leaderboard/private/view/57043)
