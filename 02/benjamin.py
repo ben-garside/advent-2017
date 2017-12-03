@@ -1,6 +1,6 @@
 def one():
     number = 0
-    with open("c:\\Users\\garsideb\\Documents\\aoc\\03\\input.txt") as f:
+    with open("input.txt") as f:
         for row in f:
             values = [int(x) for x in row.split()]
             number += max(values) - min(values)
@@ -8,7 +8,7 @@ def one():
 
 def two():
     number = 0
-    with open("c:\\Users\\garsideb\\Documents\\aoc\\03\\input.txt") as f:
+    with open("input.txt") as f:
         for row in f:
             values = [int(x) for x in row.split()]
             for value in values:
