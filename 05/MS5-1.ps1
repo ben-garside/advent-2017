@@ -2,9 +2,9 @@ $list = 2,1,2,-1,2,-3,1,-2,-7,-3,-1,-5,-2,-6,-1,-7,-11,-10,0,-5,-13,0,-5,-13,-19
 $index = 0
 $jump = 0
 $counter = 0
-$length = $true
+$outofrange = $false
 
-while ($length -eq $true)
+while ($outofrange -eq $false)
 {
     $jump = $list[$index] + $index   
     $list[$index] += 1    
@@ -16,9 +16,9 @@ while ($length -eq $true)
         $index = $jump            
     }    
     $counter++
-    if($index -gt $list.Length-1)
+    if($index -gt $list.length -1)
     {
-        $length = $false
-        Write-Host $counter
+        $outofrange = $true
+        Write-Host "Move Count: "$counter
     }    
 }
