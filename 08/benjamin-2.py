@@ -1,5 +1,3 @@
-import operator
-
 regs = {}
 max_num = 0
 
