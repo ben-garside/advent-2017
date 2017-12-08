@@ -1,11 +1,9 @@
 xquery version "1.0-ml";
 import module namespace functx = "http://www.functx.com" at "/MarkLogic/functx/functx-1.0-nodoc-2007-01.xqy";
-(:~
-  Partial solution - WIP
-~:)
-declare variable $MB-SEQ := (:(0, 2, 7, 0) :)(0,5,10,0,11,14,13,4);
+
+declare variable $MB-SEQ := (:(0, 2, 7, 0):)(0,5,10,0,11,14,13,4,11,8,8,7,1,4,12,11);
 declare variable $MB-SIZE := fn:count($MB-SEQ);
-declare variable $MB-MAP := ();
+declare variable $MB-MAP := map:new();
 declare variable $STEPS := 0;
 declare variable $MEM-BLOCKS-PATTERNS := ();
 
@@ -66,7 +64,7 @@ declare function local:move-mem-blocks()
   let $run := 
     for $index in 1 to $max-value
     return
-      if ($run-further and fn:count($MEM-BLOCKS-PATTERNS) eq fn:count(fn:distinct-values($MEM-BLOCKS-PATTERNS)))
+     if ($run-further and fn:count($MEM-BLOCKS-PATTERNS) eq fn:count(fn:distinct-values($MEM-BLOCKS-PATTERNS)))
      then (
       if ($start-fill-loc eq 1 or $start-fill-loc lt $MB-SIZE)
       then (
@@ -75,8 +73,7 @@ declare function local:move-mem-blocks()
         xdmp:set($start-fill-loc, ($start-fill-loc + 1))
         ,
         xdmp:set($MEM-BLOCKS-PATTERNS, ($MEM-BLOCKS-PATTERNS, local:hash-map()))
-        ,
-        local:print-map()
+        
       )
       else if ($start-fill-loc eq $MB-SIZE)
       then (
@@ -85,8 +82,7 @@ declare function local:move-mem-blocks()
         xdmp:set($start-fill-loc, 1)
         ,
         xdmp:set($MEM-BLOCKS-PATTERNS, ($MEM-BLOCKS-PATTERNS, local:hash-map()))
-        ,
-        local:print-map()
+        
       )
       else if ($start-fill-loc gt $MB-SIZE) 
       then (
@@ -97,21 +93,20 @@ declare function local:move-mem-blocks()
         xdmp:set($start-fill-loc, 2)
         ,
         xdmp:set($MEM-BLOCKS-PATTERNS, ($MEM-BLOCKS-PATTERNS, local:hash-map()))
-        ,
-        local:print-map()
+        
       )
       else ()
       ) else ( xdmp:set($run-further, fn:false()))
    (:let $hash := local:hash-map():)
    return 
    (
-     "Max: "||$max-value||"; Max-loc: "||$max-value-loc||", Hashes: "||fn:string-join($MEM-BLOCKS-PATTERNS, ","),
-     (:"Current hash: "||$hash,:)$run,
-     xdmp:set($STEPS, $STEPS + 1)
-     ,
+     (:"Max: "||$max-value||"; Max-loc: "||$max-value-loc||", Hashes: "||fn:string-join($MEM-BLOCKS-PATTERNS, ","),
+     "Current hash: "||$hash,$run,:)
+     
      if ($run-further (:fn:count($MEM-BLOCKS-PATTERNS) eq fn:count(fn:distinct-values($MEM-BLOCKS-PATTERNS)):))
      then (
-       
+       xdmp:set($STEPS, $STEPS + 1)
+       ,
        (:,
        $STEPS || " Step Completed"
        ,:)
